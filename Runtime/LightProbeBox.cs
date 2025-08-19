@@ -34,6 +34,7 @@ public class LightProbeBox : MonoBehaviour
 			
 			Undo.RecordObject(this, "Modify LightProbeBox Bounds");
 			bounds = value;
+			
 			EditorUtility.SetDirty(this);
 		}
 	}
