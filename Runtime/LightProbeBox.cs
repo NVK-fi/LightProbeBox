@@ -11,18 +11,22 @@ public class LightProbeBox : MonoBehaviour
 {
 	[field: Header("Lattice")]
 	[field: Tooltip("Defines how the lattice points are arranged.")]
-	[field:SerializeField] public LatticeStructureType StructureType { get; private set; }
+	[field: SerializeField]
+	public LatticeStructureType StructureType { get; private set; }
 	[field: Tooltip("The minimum distance between the lattice points.")]
-	[field: SerializeField, Min(1f)] public float MinSpacing { get; private set; } = 4f;
+	[field: SerializeField, Min(1f)]
+	public float MinSpacing { get; private set; } = 4f;
 
 	[field: Header("Collision Resolver")]
 	[field: Tooltip("Select which layers to use for collision detection.")]
-	[field: SerializeField] public LayerMask CollisionLayers { get; private set; } = 1;
+	[field: SerializeField]
+	public LayerMask CollisionLayers { get; private set; } = 1;
 	[field: Tooltip("The minimum distance a Light Probe must have to the nearest collider.")]
-	[field: SerializeField,Min(.01f)] public float MinClearance { get; private set; } = 0.5f;
-	
-	[SerializeField, HideInInspector]
-	private Bounds bounds = new(Vector3.up * 3, new Vector3(10, 6, 10));
+	[field: SerializeField, Min(.01f)]
+	public float MinClearance { get; private set; } = 0.5f;
+
+	[SerializeField, HideInInspector] private Bounds bounds = new(Vector3.up * 3, new Vector3(10, 6, 10));
+
 	public Bounds Bounds
 	{
 		get => bounds;

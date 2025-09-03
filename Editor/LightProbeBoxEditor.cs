@@ -21,10 +21,10 @@ public class LightProbeBoxEditor : Editor
 	
 	private const int ButtonWidth = 230;
 	private const int ButtonHeight = 24;
-	private const int ButtonHorizontalOffset = -6;
 
 	// A set of biases for the collision resolver to iterate through. 
 	private static readonly float[] IterationBiases = { .6f, 1f, 1.2f, 1f };
+	private const int MaxOverlapColliders = 10;
 
 	public override void OnInspectorGUI()
 	{
@@ -47,15 +47,15 @@ public class LightProbeBoxEditor : Editor
 		static void DrawGenerateButton()
 		{
 			var buttonRect = GUILayoutUtility.GetRect(ButtonWidth, ButtonHeight);
-			buttonRect.x = (EditorGUIUtility.currentViewWidth - ButtonWidth) / 2 + ButtonHorizontalOffset;
+			buttonRect.x = (EditorGUIUtility.currentViewWidth - ButtonWidth) / 2;
 			buttonRect.width = ButtonWidth;
-
-			if (GUI.Button(buttonRect, "Generate Probes"))
+			
+			if (GUI.Button(buttonRect, "Regenerate Probes"))
 			{
 				var lightProbeBoxes = Selection.GetFiltered<LightProbeBox>(SelectionMode.TopLevel);
 
 				var processedBoxes = new List<LightProbeBox>(lightProbeBoxes.Length);
-				using (var collisionResolver = new LightProbeBoxCollisionResolver(10, IterationBiases))
+				using (var collisionResolver = new LightProbeBoxCollisionResolver(MaxOverlapColliders, IterationBiases))
 				{
 					foreach (var lightProbeBox in lightProbeBoxes.OrderBy(box => box.DensityEstimate()))
 					{
