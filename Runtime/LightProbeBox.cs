@@ -16,8 +16,6 @@ public class LightProbeBox : MonoBehaviour
 	[field: SerializeField, Min(1f)] public float MinSpacing { get; private set; } = 4f;
 
 	[field: Header("Collision Resolver")]
-	[field: Tooltip("Determines whether the external bounds must be respected.")]
-	[field: SerializeField] public bool ConstrainWithinBounds { get; private set; } = true;
 	[field: Tooltip("Select which layers to use for collision detection.")]
 	[field: SerializeField] public LayerMask CollisionLayers { get; private set; } = 1;
 	[field: Tooltip("The minimum distance a Light Probe must have to the nearest collider.")]

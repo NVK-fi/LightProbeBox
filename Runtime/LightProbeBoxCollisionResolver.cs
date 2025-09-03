@@ -51,8 +51,7 @@ public class LightProbeBoxCollisionResolver : IDisposable
 		}
 		
 		unobstructedLocalPosition = lightProbeBox.transform.InverseTransformPoint(sampleWorldPosition);
-		
-		if (lightProbeBox.ConstrainWithinBounds && !lightProbeBox.Bounds.Contains(unobstructedLocalPosition))
+		if (!lightProbeBox.Bounds.Contains(unobstructedLocalPosition))
 			return false;
 		
 		return ComputeOverlaps(sampleWorldPosition, lightProbeBox) == 0;
