@@ -6,7 +6,27 @@ using Vector3 = UnityEngine.Vector3;
 public static class LightProbeBoxExtensions
 {
 	/// <summary>
-	/// Returns whether the world position is within the reach of any LightProbeBox in the list. 
+	/// An SDF to calculate the shortest distance from a world position to bounds' surface.
+	/// Returns negative values for points inside and positive for points outside.
+	/// </summary>
+	public static float GetDistanceTo(this LightProbeBox lightProbeBox, Vector3 worldPosition)
+	{
+		var localPosition = lightProbeBox.transform.InverseTransformPoint(worldPosition);
+		var bounds = lightProbeBox.Bounds;
+		
+		var q = new Vector3(
+			Mathf.Abs(localPosition.x - bounds.center.x) - bounds.size.x * 0.5f,
+			Mathf.Abs(localPosition.y - bounds.center.y) - bounds.size.y * 0.5f,
+			Mathf.Abs(localPosition.z - bounds.center.z) - bounds.size.z * 0.5f
+		);
+
+		return Mathf.Min(Mathf.Max(q.x, Mathf.Max(q.y, q.z)), 0f) +
+				new Vector3(Mathf.Max(q.x, 0f), Mathf.Max(q.y, 0f), Mathf.Max(q.z, 0f)).magnitude;
+	}
+	
+	
+	/// <summary>
+	/// Returns whether the world position is within the reach (spacing included) of any LightProbeBox in the list. 
 	/// </summary>
 	public static bool CanReachPosition(this List<LightProbeBox> lightProbeBoxes, Vector3 worldPosition)
 	{
@@ -14,9 +34,7 @@ public static class LightProbeBoxExtensions
 
 		foreach (var lightProbeBox in lightProbeBoxes)
 		{
-			var localPosition = lightProbeBox.transform.InverseTransformPoint(worldPosition);
-			
-			if (lightProbeBox.Bounds.GetDistance(localPosition) < lightProbeBox.MinSpacing * .5f)
+			if (lightProbeBox.GetDistanceTo(worldPosition) < lightProbeBox.MinSpacing * .5f)
 				return true;
 		}
 

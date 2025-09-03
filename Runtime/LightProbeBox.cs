@@ -11,7 +11,7 @@ public class LightProbeBox : MonoBehaviour
 {
 	[field: Header("Lattice")]
 	[field: Tooltip("Defines how the lattice points are arranged.")]
-	[field:SerializeField] public LatticeStructure Structure { get; private set; }
+	[field:SerializeField] public LatticeStructureType StructureType { get; private set; }
 	[field: Tooltip("The minimum distance between the lattice points.")]
 	[field: SerializeField, Min(1f)] public float MinSpacing { get; private set; } = 4f;
 
@@ -57,7 +57,7 @@ public class LightProbeBox : MonoBehaviour
 			var latticeSize = Bounds.size - Vector3.one * (2 * MinClearance);
 			var latticeBounds = new Bounds(Bounds.center, latticeSize);
 
-			foreach (var sampleLocalPosition in latticeBounds.GetLattice(Structure, MinSpacing))
+			foreach (var sampleLocalPosition in latticeBounds.GetLattice(StructureType, MinSpacing))
 			{
 				var sampleWorldPosition = transform.TransformPoint(sampleLocalPosition);
 
