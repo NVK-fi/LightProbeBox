@@ -14,7 +14,7 @@ Arranges the light probes evenly inside the defined bounds (a 'Light Probe Box')
 ---
 
 ## Key features
-- Creates and arranges light probes for you
+- Creates and arranges the light probes for you
 - Prevents clipping with geometry
 - Prevents redundant overlapping placements with other Light Probe Boxes
 - Supports simple and body-centered cubic lattices
@@ -43,3 +43,7 @@ Once added:
 
 https://github.com/user-attachments/assets/a39fdfe4-547f-41f3-a845-247532cbf9ce
 
+## Notes
+
+- The inspector settings include helpful tooltips
+- This tool is licensed under the [MIT License](https://raw.githubusercontent.com/NVK-fi/LightProbeBox/refs/heads/main/LICENSE)
