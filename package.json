@@ -1,5 +1,5 @@
 {
-  "name": "com.nvk-fi.lightprobebox",
+  "name": "com.nvk.lightprobebox",
   "version": "1.0.0",
   "displayName": "Light Probe Box",
   "description": "Makes the placing and editing of Light Probe Groups fast and easy.\nArranges the light probes evenly inside a defined 3D volume (a 'Light Probe Box') while respecting scene geometry.",
