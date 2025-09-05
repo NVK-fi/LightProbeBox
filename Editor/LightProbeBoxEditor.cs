@@ -57,7 +57,8 @@ public class LightProbeBoxEditor : Editor
 				var processedBoxes = new List<LightProbeBox>(lightProbeBoxes.Length);
 				using (var collisionResolver = new LightProbeBoxCollisionResolver(MaxOverlapColliders, IterationBiases))
 				{
-					foreach (var lightProbeBox in lightProbeBoxes.OrderBy(box => box.DensityEstimate()))
+					foreach (var lightProbeBox in lightProbeBoxes.OrderByDescending(box => box.Priority)
+								.ThenByDescending(box => box.DensityEstimate()))
 					{
 						lightProbeBox.Generate(processedBoxes, collisionResolver);
 						processedBoxes.Add(lightProbeBox);

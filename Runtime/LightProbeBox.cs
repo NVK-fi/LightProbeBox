@@ -9,6 +9,9 @@ using static BoundsExtensions;
 [RequireComponent(typeof(LightProbeGroup)), DisallowMultipleComponent]
 public class LightProbeBox : MonoBehaviour
 {
+	[field: Tooltip("Generation priority.\nHigher are processed first, ties are broken by density.")]
+	[field: SerializeField]
+	public int Priority { get; private set; }
 	[field: Header("Lattice")]
 	[field: Tooltip("Defines how the lattice points are arranged.")]
 	[field: SerializeField]
