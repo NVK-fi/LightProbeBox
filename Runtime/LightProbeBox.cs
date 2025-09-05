@@ -21,6 +21,9 @@ public class LightProbeBox : MonoBehaviour
 	public float MinSpacing { get; private set; } = 4f;
 
 	[field: Header("Collision Resolver")]
+	[field: Tooltip("A set of resolver step biases to iterate through.\nTweak these to get better coverage in complex scenes.")]
+	[field: SerializeField]
+	public float[] IterationBiases { get; private set; } = { .6f, 1f, 1.2f, 1f };
 	[field: Tooltip("Select which layers to use for collision detection.")]
 	[field: SerializeField]
 	public LayerMask CollisionLayers { get; private set; } = 1;

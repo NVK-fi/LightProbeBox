@@ -45,7 +45,7 @@ public static class LightProbeBoxExtensions
 	/// Quickly estimates the density of a LightProbeBox.
 	/// Inaccurate but useful for sorting.
 	/// </summary>
-	public static float DensityEstimate(this LightProbeBox lightProbeBox)
+	public static float EstimateDensity(this LightProbeBox lightProbeBox)
 	{
 		var size = lightProbeBox.Bounds.size;
 		var spacing = lightProbeBox.MinSpacing;

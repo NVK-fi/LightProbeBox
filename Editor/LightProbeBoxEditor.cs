@@ -22,10 +22,6 @@ public class LightProbeBoxEditor : Editor
 	private const int ButtonWidth = 230;
 	private const int ButtonHeight = 24;
 
-	// A set of biases for the collision resolver to iterate through. 
-	private static readonly float[] IterationBiases = { .6f, 1f, 1.2f, 1f };
-	private const int MaxOverlapColliders = 10;
-
 	public override void OnInspectorGUI()
 	{
 		base.OnInspectorGUI();
@@ -55,10 +51,11 @@ public class LightProbeBoxEditor : Editor
 				var lightProbeBoxes = Selection.GetFiltered<LightProbeBox>(SelectionMode.TopLevel);
 
 				var processedBoxes = new List<LightProbeBox>(lightProbeBoxes.Length);
-				using (var collisionResolver = new LightProbeBoxCollisionResolver(MaxOverlapColliders, IterationBiases))
+				using (var collisionResolver = new LightProbeBoxCollisionResolver())
 				{
-					foreach (var lightProbeBox in lightProbeBoxes.OrderByDescending(box => box.Priority)
-								.ThenByDescending(box => box.DensityEstimate()))
+					foreach (var lightProbeBox in lightProbeBoxes
+								.OrderByDescending(box => box.Priority)
+								.ThenByDescending(box => box.EstimateDensity()))
 					{
 						lightProbeBox.Generate(processedBoxes, collisionResolver);
 						processedBoxes.Add(lightProbeBox);
@@ -147,7 +144,6 @@ public class LightProbeBoxEditor : Editor
 			if (!lightProbeBox.TryGetComponent(out LightProbeGroup lightProbeGroup) ||
 				lightProbeGroup.probePositions.Length == 0) return;
 
-			// Handles.color = ColliderColor;
 			Handles.color = WireFrameColor;
 			Handles.zTest = UnityEngine.Rendering.CompareFunction.LessEqual;
 

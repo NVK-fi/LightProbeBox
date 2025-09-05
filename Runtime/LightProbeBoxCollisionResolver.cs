@@ -12,22 +12,15 @@ public class LightProbeBoxCollisionResolver : IDisposable
 	private readonly GameObject _detectorObject;
 	private readonly SphereCollider _detectorCollider;
 	private readonly Collider[] _overlapColliders;
-	private readonly float[] _iterationBiases;
 
 	/// <summary>
 	/// Handles collision detection and resolution for light probes.
 	/// </summary>
-	/// <param name="maxOverlapColliders">Maximum number of overlapping colliders to detect. Must be at least 1.</param>
-	/// <param name="iterationBiases">Biases for the collision resolution iterations. There must be at least one.</param>
-	public LightProbeBoxCollisionResolver(int maxOverlapColliders, float[] iterationBiases)
+	public LightProbeBoxCollisionResolver()
 	{
+		_overlapColliders = new Collider[10];
 		_detectorObject = new GameObject("Probe Collider", typeof(SphereCollider));
 		_detectorCollider = _detectorObject.GetComponent<SphereCollider>();
-
-		_overlapColliders = new Collider[Mathf.Max(1, maxOverlapColliders)];
-
-		iterationBiases ??= new[] { 1f };
-		_iterationBiases = iterationBiases;
 	}
 
 	/// <summary>
@@ -41,7 +34,8 @@ public class LightProbeBoxCollisionResolver : IDisposable
 		unobstructedLocalPosition = lightProbeBox.transform.InverseTransformPoint(sampleWorldPosition);
 		if (ComputeOverlaps(sampleWorldPosition, lightProbeBox) == 0) return true;
 		
-		foreach (var bias in _iterationBiases)
+		if (lightProbeBox.IterationBiases.Length <= 0) return false;
+		foreach (var bias in lightProbeBox.IterationBiases)
 		{
 			var newWorldPosition = ResolveCollisionStep(sampleWorldPosition, lightProbeBox, bias);
 			var deltaSqrMagnitude = (newWorldPosition - sampleWorldPosition).sqrMagnitude;
@@ -51,8 +45,7 @@ public class LightProbeBoxCollisionResolver : IDisposable
 		}
 		
 		unobstructedLocalPosition = lightProbeBox.transform.InverseTransformPoint(sampleWorldPosition);
-		if (!lightProbeBox.Bounds.Contains(unobstructedLocalPosition))
-			return false;
+		if (!lightProbeBox.Bounds.Contains(unobstructedLocalPosition)) return false;
 		
 		return ComputeOverlaps(sampleWorldPosition, lightProbeBox) == 0;
 	}
