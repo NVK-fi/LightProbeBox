@@ -90,9 +90,9 @@ public class LightProbeBoxEditor : Editor
 			if (!_proIconTexture || !_iconTexture)
 			{
 				_proIconTexture =
-					AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/LightProbeBox/Icon/d_LightProbeBoxIcon.png");
+					AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.nvk.lightprobebox/Icon/d_LightProbeBoxIcon.png");
 				_iconTexture =
-					AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/LightProbeBox/Icon/LightProbeBoxIcon.png");
+					AssetDatabase.LoadAssetAtPath<Texture2D>("Packages/com.nvk.lightprobebox/Icon/LightProbeBoxIcon.png");
 
 				var script = MonoScript.FromMonoBehaviour((LightProbeBox)target);
 				EditorGUIUtility.SetIconForObject(script, EditorGUIUtility.isProSkin ? _proIconTexture : _iconTexture);
