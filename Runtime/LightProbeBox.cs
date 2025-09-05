@@ -9,27 +9,27 @@ using static BoundsExtensions;
 [RequireComponent(typeof(LightProbeGroup)), DisallowMultipleComponent]
 public class LightProbeBox : MonoBehaviour
 {
-	[field: Tooltip("Generation priority.\nHigher are processed first, ties are broken by density.")]
-	[field: SerializeField]
-	public int Priority { get; private set; }
-	[field: Header("Lattice")]
-	[field: Tooltip("Defines how the lattice points are arranged.")]
-	[field: SerializeField]
-	public LatticeStructureType StructureType { get; private set; }
-	[field: Tooltip("The minimum distance between the lattice points.")]
-	[field: SerializeField, Min(1f)]
-	public float MinSpacing { get; private set; } = 4f;
+	[Tooltip("The priority used when regenerating multiple Light Probe Boxes at once.\nHigher are processed first, ties are broken by density.")]
+	[SerializeField] private int priority;
+	public int Priority => priority;
+	[Header("Lattice")]
+	[Tooltip("Defines how the lattice points are arranged.")]
+	[SerializeField] private LatticeStructureType structureType;
+	public LatticeStructureType StructureType => structureType;
+	[Tooltip("The minimum distance between the lattice points.")]
+	[SerializeField, Min(1f)] private float minSpacing = 4f;
+	public float MinSpacing => minSpacing;
 
-	[field: Header("Collision Resolver")]
-	[field: Tooltip("A set of resolver step biases to iterate through.\nTweak these to get better coverage in complex scenes.")]
-	[field: SerializeField]
-	public float[] IterationBiases { get; private set; } = { .6f, 1f, 1.2f, 1f };
-	[field: Tooltip("Select which layers to use for collision detection.")]
-	[field: SerializeField]
-	public LayerMask CollisionLayers { get; private set; } = 1;
-	[field: Tooltip("The minimum distance a Light Probe must have to the nearest collider.")]
-	[field: SerializeField, Min(.01f)]
-	public float MinClearance { get; private set; } = 0.5f;
+	[Header("Collision Resolver")]
+	[Tooltip("A set of resolver step biases to iterate through.\nTweak these to get better coverage in complex scenes.")]
+	[SerializeField] private float[] iterationBiases = { .6f, 1f, 1.2f, 1f };
+	public float[] IterationBiases => iterationBiases;
+	[Tooltip("Select which layers to use for collision detection.")]
+	[SerializeField] private LayerMask collisionLayers = 1;
+	public LayerMask CollisionLayers => collisionLayers;
+	[Tooltip("The minimum distance a Light Probe must have to the nearest collider.")]
+	[SerializeField, Min(.01f)] private float minClearance = .5f;
+	public float MinClearance => minClearance;
 
 	[SerializeField, HideInInspector] private Bounds bounds = new(Vector3.up * 3, new Vector3(10, 6, 10));
 
