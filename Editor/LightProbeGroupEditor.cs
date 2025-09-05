@@ -15,7 +15,7 @@ public class LightProbeGroupEditor : Editor
 	public override void OnInspectorGUI()
 	{
 		if (_isManagedByLightProbeBox)
-			EditorGUILayout.HelpBox("This Light Probe Group is generated with a Light Probe Box.", MessageType.Info);
+			EditorGUILayout.HelpBox("The Light Probes are generated with the attached Light Probe Box.", MessageType.Info);
 
 		base.OnInspectorGUI();
 	}
