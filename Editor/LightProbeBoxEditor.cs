@@ -14,7 +14,8 @@ public class LightProbeBoxEditor : Editor
 	private static bool _drawDebugGizmos = true;
 	private static readonly Color WireFrameColor = new(.8f, .8f, .8f, 1);
 	private static readonly Color HandleColor = new(1, .7f, .1f, 1f);
-	private static float HandleSize(Vector3 position) => Mathf.Max(HandleUtility.GetHandleSize(position) * 0.05f, 0.2f);
+
+	private static float HandleSize(Vector3 position) => Mathf.Clamp(HandleUtility.GetHandleSize(position) * 0.1f, 0.05f, 0.15f);
 
 	private static Texture2D _iconTexture;
 	private static Texture2D _proIconTexture;
